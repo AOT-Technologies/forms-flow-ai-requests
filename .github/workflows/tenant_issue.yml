@@ -26,7 +26,7 @@ jobs:
 
         run: |
           echo '${{env.PAYLOAD}}'
-          response = curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '${{env.PAYLOAD}}' 
+          echo "response = curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '${{env.PAYLOAD}}'"
           echo ${response}
           #if $response == "200"
           #echo "message=Success" >> $GITHUB_ENV
