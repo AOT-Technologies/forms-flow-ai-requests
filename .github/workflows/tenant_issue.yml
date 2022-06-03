@@ -21,7 +21,7 @@ jobs:
         id: issue-parser
 
       - run: |
-          echo ${{ steps.issue-parser.outputs }}
-          echo curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -d '{"key": "${{ steps.issue-parser.outputs.tenant_key }}", "name": ${{ steps.issue-parser.outputs.jsonString.tenant_name }}, "details": {"applicationTitle": ${{ steps.issue-parser.outputs.jsonString.tenant_title}} } }'
-          curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -d '{"key": ${{ steps.issue-parser.outputs.jsonString.tenant_key }}, "name": ${{ steps.issue-parser.outputs.jsonString.tenant_name }}, "details": {"applicationTitle": ${{ steps.issue-parser.outputs.jsonString.tenant_title}} } }'
+          echo ${{ fromJson(steps.issue-parser.outputs) }}
+          echo curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -d '{"key": "${{ fromJson(steps.issue-parser.outputs)tenant_key }}", "name": ${{ steps.issue-parser.outputs.jsonString.tenant_name }}, "details": {"applicationTitle": ${{ steps.issue-parser.outputs.jsonString.tenant_title}} } }'
+          curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -d '{"key": ${{ steps.issue-parser.outputs.jsonString.tenant_key }}, "name": ${{ steps.issue-parser.outputs.jsonString.tenant_name }}, "details": {"applicationTitle": ${{ steps.issue-parser.outputs.jsonString.tenant_title}} } }' -H 'Content-Type: application/json'
 
