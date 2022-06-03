@@ -24,9 +24,11 @@ jobs:
         id: create-tenant
         env:
           PAYLOAD: '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }'
-        uses: wei/curl@master
-        with:
-          args: -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}'
+       # uses: wei/curl@master
+       # with:
+       #   args: -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}'
+        run: |
+          curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}'
       - name: Update Result
         run: |
           echo {{steps.create-tenant.outputs}}
