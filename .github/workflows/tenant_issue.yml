@@ -28,9 +28,10 @@ jobs:
        # with:
        #   args: -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}'
         run: |
-          curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}'
+          response = curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}'
+          echo "RESPONSE=$response" >> $GITHUB_ENV
       - name: Update Result
         run: |
-          echo {{steps.create-tenant.outputs}}
+          echo ${{ env.VERSION }}
 
         
