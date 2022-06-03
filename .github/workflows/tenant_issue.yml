@@ -5,7 +5,6 @@ on:
     types: [opened]
 jobs:
   add-initial-comment:
-    if: github.event.label.name == 'tenant'
     runs-on: ubuntu-latest
     permissions:
       issues: write
