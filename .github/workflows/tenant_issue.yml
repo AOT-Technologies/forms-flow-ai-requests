@@ -22,7 +22,7 @@ jobs:
 
       - run: |
           CODE = `$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }')`
-          response = '$CODE'
+     #     response = '$CODE'
      #     echo "RESPONSE=$response" >> $GITHUB_ENV
      # - name: Update Status
      #   uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
