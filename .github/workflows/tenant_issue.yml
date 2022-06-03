@@ -21,4 +21,4 @@ jobs:
         id: issue-parser
 
       - run: |
-          echo ${{ steps.issue-parser.outputs.jsonString }}
+          echo '${{ steps.issue-parser.outputs.jsonString }}'
