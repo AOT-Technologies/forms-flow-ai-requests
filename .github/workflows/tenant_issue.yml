@@ -2,7 +2,7 @@ name: Tenant Request
 
 on:
   issues:
-    types: [opened]
+    types: [opened, updated]
 jobs:
   add-initial-comment:
     runs-on: ubuntu-latest
@@ -22,5 +22,5 @@ jobs:
 
       - run: |
           echo '${{ steps.issue-parser.outputs.jsonString }}'
-          curl -X POST ${{ env.TENANT_ENDPOINT }} -d '{"key": ${{ steps.issue-parser.outputs.jsonString.tenant_key }}, "name": ${{ steps.issue-parser.outputs.jsonString.tenant_name }}, "details": {"applicationTitle": ${{ steps.issue-parser.outputs.jsonString.tenant_title}} } }'
+          curl -X POST '${{ env.TENANT_ENDPOINT }}' -d '{"key": ${{ steps.issue-parser.outputs.jsonString.tenant_key }}, "name": ${{ steps.issue-parser.outputs.jsonString.tenant_name }}, "details": {"applicationTitle": ${{ steps.issue-parser.outputs.jsonString.tenant_title}} } }'
 
