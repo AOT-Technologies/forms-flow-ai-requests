@@ -21,20 +21,8 @@ jobs:
         id: issue-parser
 
       - run: |
-          
-          CODE=`curl -i --write-out '%{http_code}' \
-          --output /dev/null \
-          --request POST \
-          --header 'content-type: application/json' \
-          --url '${{ secrets.TENANT_ENDPOINT }}' \
-          --data '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }'`
-          echo '$CODE'
-          if [ $CODE!="200" ] 
-          then
-          echo "FAILURE"
-          else
-          echo "SUCCESS"
-          fi
+          echo "::set-output name=$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }')"
+          echo $name
       - name: Update Status
         uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
         with:
