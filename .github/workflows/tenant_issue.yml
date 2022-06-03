@@ -25,7 +25,8 @@ jobs:
           PAYLOAD: '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }'
 
         run: |
-          CODE = `$(curl --write-out '%{http_code}' -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '${PAYLOAD}' )`
+          curl --write-out '%{http_code}' -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '${PAYLOAD}' > response
+          echo '$response'
           if $CODE == "200"
           echo "message=Success" >> $GITHUB_ENV
           else
