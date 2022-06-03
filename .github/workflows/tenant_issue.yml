@@ -31,6 +31,6 @@ jobs:
           echo "::set-output name=mix-test::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}')"
       - name: Update Result
         run: |
-          echo ${{ env.VERSION }}
+          echo ${{ steps.create-tenant.outputs }}
 
         
