@@ -4,12 +4,12 @@ on:
   issues:
     types: [opened, edited]
 jobs:
-  add-initial-comment:
+  create-tenant:
     runs-on: ubuntu-latest
     permissions:
       issues: write
     steps:
-      - name: Add comment
+      - name: Add initial comment
         uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -23,3 +23,28 @@ jobs:
       - run: |
           echo '${{ fromJson(steps.issue-parser.outputs.jsonString) }}'
           echo 'tenant name : ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}'
+          echo curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -d '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}, "details": {"applicationTitle": ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}} } }'
+          curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -d '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}, "details": {"applicationTitle": ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}} } }' -H 'Content-Type: application/json'
+          
+          CODE=`curl --write-out '%{http_code}' \
+          --output /dev/null \
+          --request POST \
+          --header 'content-type: application/json' \
+          --url '${{ secrets.TENANT_ENDPOINT }}' \
+          --data '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}, "details": {"applicationTitle": ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}} } }'`
+
+          if [ $CODE!="200" ] 
+          then
+          echo "FAILURE"
+          else
+          echo "SUCCESS"
+          fi
+      - name: Update Status
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Status : '$CODE'
+            
+
+
