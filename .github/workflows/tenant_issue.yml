@@ -27,7 +27,7 @@ jobs:
         run: |
           curl --write-out '%{http_code}' -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '${PAYLOAD}' > response
           echo '$response'
-          if $CODE == "200"
+          if $response == "200"
           echo "message=Success" >> $GITHUB_ENV
           else
           echo "message=Failed" >> $GITHUB_ENV
