@@ -26,7 +26,7 @@ jobs:
 
         run: |
           echo ${PAYLOAD}
-          echo CODE = `$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '${PAYLOAD}' )`
+          CODE = `$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '${PAYLOAD}' )`
           echo "RESPONSE=$CODE" >> $GITHUB_ENV
      # - name: Update Status
      #   uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
