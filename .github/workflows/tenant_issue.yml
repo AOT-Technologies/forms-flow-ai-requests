@@ -28,8 +28,7 @@ jobs:
        # with:
        #   args: -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}'
         run: |
-          response = curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}'
-          echo "RESPONSE=$response" >> $GITHUB_ENV
+          echo "::set-output name=mix-test::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}')"
       - name: Update Result
         run: |
           echo ${{ env.VERSION }}
