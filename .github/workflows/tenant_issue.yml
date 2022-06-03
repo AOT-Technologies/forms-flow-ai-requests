@@ -21,7 +21,8 @@ jobs:
         id: issue-parser
 
       - run: |
-          CODE = `$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }')`
+          payload = '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }'
+          CODE = '`$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d $payload )`'
      #     response = '$CODE'
      #     echo "RESPONSE=$response" >> $GITHUB_ENV
      # - name: Update Status
