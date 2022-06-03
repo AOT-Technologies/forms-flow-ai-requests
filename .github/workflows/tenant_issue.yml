@@ -27,7 +27,7 @@ jobs:
           --request POST \
           --header 'content-type: application/json' \
           --url '${{ secrets.TENANT_ENDPOINT }}' \
-          --data '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}" } }'`
+          --data '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }'`
           echo '$CODE'
           if [ $CODE!="200" ] 
           then
