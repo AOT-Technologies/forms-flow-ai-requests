@@ -22,7 +22,7 @@ jobs:
 
       - run: |
           
-          CODE=`curl --write-out '%{http_code}' \
+          CODE=`curl -i --write-out '%{http_code}' \
           --output /dev/null \
           --request POST \
           --header 'content-type: application/json' \
