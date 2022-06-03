@@ -21,6 +21,6 @@ jobs:
         id: issue-parser
 
       - run: |
-          echo '${{ steps.issue-parser.outputs.jsonString }}' > issue-details.json
-          curl -X POST ${{ env.TENANT_ENDPOINT }} -d '{"key": ${{ issue-details["tenant_key"] }}, "name": ${{ issue-details["tenant_name"] }}, "details": {"applicationTitle": ${{ issue-details["tenant_title"]}} } }'
+          echo '${{ steps.issue-parser.outputs.jsonString }}'
+          curl -X POST ${{ env.TENANT_ENDPOINT }} -d '{"key": ${{ steps.issue-parser.outputs.jsonString["tenant_key"] }}, "name": ${{ steps.issue-parser.outputs.jsonString["tenant_name"] }}, "details": {"applicationTitle": ${{ steps.issue-parser.outputs.jsonString["tenant_title"]}} } }'
 
