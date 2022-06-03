@@ -25,7 +25,7 @@ jobs:
           PAYLOAD: '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }'
 
         run: |
-          echo ${PAYLOAD}
+          echo '${PAYLOAD}'
           CODE = `$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '${PAYLOAD}' )`
           echo "RESPONSE=$CODE" >> $GITHUB_ENV
      # - name: Update Status
