@@ -21,5 +21,7 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/tenant.yml
 
-      - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > bug-details.json
+      - run: |
+          echo '${{ steps.issue-parser.outputs.jsonString }}' > issue-details.json
+          curl -X POST {{ env.TENANT_ENDPOINT }} -d '{"key": issue-details["tenant_key"], "name": issue-details["tenant_name"], "details": {"applicationTitle": issue-details["tenant_title"] }}'
 
