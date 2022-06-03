@@ -26,12 +26,12 @@ jobs:
 
         run: |
           curl --write-out '%{http_code}' -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d '${PAYLOAD}' > response
-          echo '$response'
-          if $response == "200"
-          echo "message=Success" >> $GITHUB_ENV
-          else
-          echo "message=Failed" >> $GITHUB_ENV
-          fi
+          echo $response
+          #if $response == "200"
+          #echo "message=Success" >> $GITHUB_ENV
+          #else
+          #echo "message=Failed" >> $GITHUB_ENV
+          #fi
      # - name: Update Status
      #   uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
      #   with:
