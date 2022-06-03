@@ -1,0 +1,51 @@
+name: Tenant Request
+description: Create a tenant request
+title: "[Tenant]: "
+labels: ["tenant"]
+assignees:
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reaching out to create a tenant request!
+  - type: input
+    id: tenant_name
+    attributes:
+      label: Tenant Name
+      description: Unique tenant name (limit to 50 characters)
+      placeholder: ex. My Tenant
+    validations:
+      required: true
+  - type: input
+    id: tenant_title
+    attributes:
+      label: Tenant Title
+      description: Tenant title which will be displayed as application title (limit to 50 characters)
+      placeholder: ex. My Tenant Title
+    validations:
+      required: true
+  - type: input
+    id: tenant_key
+    attributes:
+      label: Tenant Key
+      description: Unique tenant key without any spaces (limit to 10 characters)
+      placeholder: ex. demo
+    validations:
+      required: true
+  - type: textarea
+    id: business_purpose
+    attributes:
+      label: Description of your busines
+      description: Please give a brief on your business
+      placeholder: Tell us what you are trying to achive with formsflow!
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: How can we contact you ?
+      description: Please give your email address
+      placeholder: demo@eample.com
+    validations:
+      required: true
