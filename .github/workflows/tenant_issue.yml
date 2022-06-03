@@ -28,9 +28,9 @@ jobs:
        # with:
        #   args: -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}'
         run: |
-          echo "::set-output name=mix-test::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}')"
+          echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}')"
       - name: Update Result
         run: |
-          echo ${{ steps.create-tenant.outputs.jsonString }}
+          echo "${{ steps.create-tenant.outputs.curl_response.value }}"
 
         
