@@ -20,10 +20,13 @@ jobs:
         uses: stefanbuck/github-issue-parser@v2
         id: issue-parser
 
-      - run: |
-          payload = '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }'
-          echo "$payload"
-          CODE = '`$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d "$payload" )`'
+      - name: Create tenant
+        env:
+          PAYLOAD: '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [] } }'
+
+        run: |
+          echo ${PAYLOAD}
+          CODE = '`$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type: application/json' -d ${PAYLOAD} )`'
      #     response = '$CODE'
      #     echo "RESPONSE=$response" >> $GITHUB_ENV
      # - name: Update Status
