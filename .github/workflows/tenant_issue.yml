@@ -22,6 +22,6 @@ jobs:
 
       - run: |
           echo '${{ steps.issue-parser.outputs.jsonString }}'
-          echo curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -d '{"key": "${{ steps.issue-parser.outputs.jsonString.tenant_key }}", "name": ${{ steps.issue-parser.outputs.jsonString.tenant_name }}, "details": {"applicationTitle": ${{ steps.issue-parser.outputs.jsonString.tenant_title}} } }'
+          echo curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -d '{"key": "${{ steps.issue-parser.outputs.tenant_key }}", "name": ${{ steps.issue-parser.outputs.jsonString.tenant_name }}, "details": {"applicationTitle": ${{ steps.issue-parser.outputs.jsonString.tenant_title}} } }'
           curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -d '{"key": ${{ steps.issue-parser.outputs.jsonString.tenant_key }}, "name": ${{ steps.issue-parser.outputs.jsonString.tenant_name }}, "details": {"applicationTitle": ${{ steps.issue-parser.outputs.jsonString.tenant_title}} } }'
 
