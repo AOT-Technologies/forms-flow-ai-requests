@@ -15,5 +15,11 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             We are working on it :sparkles: Thank you for your interest! :sparkles:
+      - name: Parse issue
+        uses: stefanbuck/github-issue-parser@v2
+        id: issue-parser
+        with:
+          template-path: .github/ISSUE_TEMPLATE/tenant.yml
 
+      - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > bug-details.json
 
