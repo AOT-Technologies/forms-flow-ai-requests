@@ -33,14 +33,6 @@ body:
       placeholder: ex. demo
     validations:
       required: true
-  - type: input
-    id: tenant_roles
-    attributes:
-      label: Custom Tenant Roles
-      description: Comma separated role names
-      placeholder: ex. clerk,approver
-    validations:
-      required: false
   - type: textarea
     id: business_purpose
     attributes:
