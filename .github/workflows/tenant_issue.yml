@@ -56,7 +56,9 @@ jobs:
             | User name | Temporary Password |
             |--|--|
             | admin@${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }} | formsflow |
-
+            
+            <br/>
+            Please verify the details and close the ticket!
 
 
             
