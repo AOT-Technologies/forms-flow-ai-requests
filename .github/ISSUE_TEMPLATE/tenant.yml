@@ -3,7 +3,7 @@ description: Create a tenant request
 title: "[Tenant]: "
 labels: ["tenant"]
 assignees:
-  - sumesh-aot
+  - github-actions
 body:
   - type: markdown
     attributes:
