@@ -35,11 +35,11 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Your request to create a tenant has been completed!:sparkles: \n
-            Please use below details to try out your tenant; \n
+            Your request to create a tenant has been completed!:sparkles: <br/>
+            Please use below details to try out your tenant; <br/>
             
             
-            <b>Application URL : $ {{ secrets.TENANT_URL }}/${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }} </b>
+            <b>Application URL : ${{ secrets.TENANT_URL }}/${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }} </b>
 
             | User role | User Name | Temporary Password |
             |--|--|--|
@@ -47,12 +47,12 @@ jobs:
             | Client user | ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}-client | formsflow |
             | Reviewer user | ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}-reviewer | formsflow |
 
-            <b>BPM Admin URL : $ {{ secrets.BPM_URL }} </b>
+            <b>BPM Admin URL : ${{ secrets.BPM_URL }} </b>
             | User name | Temporary Password |
             |--|--|
             | ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}-admin | formsflow |
 
-            <b>Analytics Dashboard URL : $ {{ secrets.ANALYTICS_URL }}${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}  </b>
+            <b>Analytics Dashboard URL : ${{ secrets.ANALYTICS_URL }}${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}  </b>
             | User name | Temporary Password |
             |--|--|
             | admin@${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }} | formsflow |
