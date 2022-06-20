@@ -35,7 +35,7 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Youre request to create a tenant has been completed!:sparkles: We are working on updating the result here!
+            Your request to create a tenant has been completed!:sparkles: We are working on updating the result here!
 
 
         
