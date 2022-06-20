@@ -30,5 +30,12 @@ jobs:
       - name: Update Result
         run: |
           echo "${{ steps.create-tenant.outputs.curl_response.value }}"
+      - name: Update comment
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Youre request to create a tenant has been completed!:sparkles: We are working on updating the result here!
+
 
         
