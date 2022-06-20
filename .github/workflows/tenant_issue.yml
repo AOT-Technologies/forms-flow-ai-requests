@@ -39,7 +39,7 @@ jobs:
             Please use below details to try out your tenant; <br/>
             
             
-            <b>Application URL : ${{ secrets.TENANT_URL }}/${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }} </b>
+            <b>Application URL : ${{ secrets.TENANT_URL }}${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }} </b>
 
             | User role | User Name | Temporary Password |
             |--|--|--|
