@@ -25,11 +25,6 @@ jobs:
         env:
           PAYLOAD: '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_title}}", "roles": [], "createDefaultUsers": true } }'
         run: |
-          custom_roles="${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_roles }}"
-          IFS=',' read -r -a roles_array <<< "$custom_roles"
-          echo "$custom_roles"
-          #payload= "{{env.PAYLOAD}}"
-          #payload['details']['roles']=roles_array
           echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}')"
       - name: Update Result
         run: |
