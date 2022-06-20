@@ -29,7 +29,7 @@ body:
     id: tenant_key
     attributes:
       label: Tenant Key
-      description: Unique tenant key without any spaces (limit to 10 characters)
+      description: Unique tenant key without <b>any spaces and in small characters</b> (limit to 10 characters)
       placeholder: ex. demo
     validations:
       required: true
