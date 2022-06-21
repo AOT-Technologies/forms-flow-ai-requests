@@ -10,19 +10,19 @@ body:
       value: |
         Thanks for reaching out to create a tenant request!
   - type: input
-    id: tenant_name
+    id: business_name
     attributes:
-      label: Tenant Name
-      description: Unique tenant name (limit to 50 characters)
-      placeholder: ex. My Tenant
+      label: Business Name
+      description: Unique business name (limit to 50 characters)
+      placeholder: ex. My Business
     validations:
       required: true
   - type: input
-    id: tenant_title
+    id: application_name
     attributes:
-      label: Tenant Title
-      description: Tenant title which will be displayed as application title (limit to 50 characters)
-      placeholder: ex. My Tenant Title
+      label: Application Name
+      description: Application name which will be displayed to users as title (limit to 50 characters)
+      placeholder: ex. My Application Name
     validations:
       required: true
   - type: input
