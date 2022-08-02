@@ -26,7 +26,7 @@ jobs:
           PAYLOAD: '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).business_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).application_name}}", "roles": [{"name":"clerk", "description": "Clerk"}, {"name":"approver", "description": "Approver"}], "createDefaultUsers": true } }'
         run: |
           echo "${{ steps.issue-parser.outputs.jsonString }}"
-          echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}')"
+          echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}' | jq)"
       - name: Update Result
         run: |
           echo "${{ steps.create-tenant.outputs.curl_response }}"
