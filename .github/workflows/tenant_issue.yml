@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "${{ steps.issue-parser.outputs.jsonString }}"
           echo "${{ fromJson(steps.keycloak.outputs.curl_response).access_token }}"
-          echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}' )"
+          echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -H 'Authorization: Bearer ${{ fromJson(steps.keycloak.outputs.curl_response).access_token }}' -d '${{env.PAYLOAD}}' )"
       - name: Check result
         run: |
           echo "${{ steps.create-tenant.outputs.curl_response }}"
