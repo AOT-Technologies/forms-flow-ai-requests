@@ -30,7 +30,7 @@ jobs:
       - name: Update Result
         run: |
           echo "${{ steps.create-tenant.outputs.curl_response }}"
-          echo "${{fromJson(steps.create-tenant.outputs.curl_response).code}}"
+          echo "${{fromJson(steps.create-tenant.outputs.curl_response).codex}}"
 
       - name: Update comment
         uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
