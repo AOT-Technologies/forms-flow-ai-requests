@@ -19,6 +19,11 @@ jobs:
       - name: Parse issue
         uses: stefanbuck/github-issue-parser@v2
         id: issue-parser
+        
+      - name: Create Keycloak Token
+        id: keycloak
+        run: |
+          echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.KEYCLOAK_TOKEN_ENDPOINT }}' -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=client_credentials'  -d 'client_id=${{ secrets.KEYCLOAK_CLIENT }}' -d 'client_secret=${{ secrets.KEYCLOAK_CLIENT_SECRET }}' )"
 
       - name: Create tenant
         id: create-tenant
@@ -26,6 +31,7 @@ jobs:
           PAYLOAD: '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).business_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).application_name}}", "roles": [{"name":"clerk", "description": "Clerk"}, {"name":"approver", "description": "Approver"}], "createDefaultUsers": true } }'
         run: |
           echo "${{ steps.issue-parser.outputs.jsonString }}"
+          echo "${{ fromJson(steps.keycloak.outputs.curl_response).access_token }}"
           echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}' )"
       - name: Check result
         run: |
