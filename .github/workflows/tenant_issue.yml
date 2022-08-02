@@ -27,12 +27,23 @@ jobs:
         run: |
           echo "${{ steps.issue-parser.outputs.jsonString }}"
           echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}' )"
-      - name: Update Result
+      - name: Check result
         run: |
           echo "${{ steps.create-tenant.outputs.curl_response }}"
-          echo "${{fromJson(steps.create-tenant.outputs.curl_response).codex}}"
+          echo "${{fromJson(steps.create-tenant.outputs.curl_response).code}}"
+          
+      - name: Update failure comment
+        if: ${{ fromJson(steps.create-tenant.outputs.curl_response).code }} != ''
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            An error occurred while creating your tenant. <br />
+            Error code    : "${{ fromJson(steps.create-tenant.outputs.curl_response).code }}"
+            Error Message : "${{ fromJson(steps.create-tenant.outputs.curl_response).message }}"
 
-      - name: Update comment
+      - name: Update success comment
+        if: ${{ fromJson(steps.create-tenant.outputs.curl_response).code }} == ''
         uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
         with:
           issue-number: ${{ github.event.issue.number }}
