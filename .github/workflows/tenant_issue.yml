@@ -26,10 +26,10 @@ jobs:
           PAYLOAD: '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).business_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).application_name}}", "roles": [{"name":"clerk", "description": "Clerk"}, {"name":"approver", "description": "Approver"}], "createDefaultUsers": true } }'
         run: |
           echo "${{ steps.issue-parser.outputs.jsonString }}"
-          echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}' | jq)"
+          echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -d '${{env.PAYLOAD}}' )"
       - name: Update Result
         run: |
-          echo "${{ steps.create-tenant.outputs.curl_response }}"
+          echo "${{ steps.create-tenant.outputs.curl_response.jsonString }}"
       - name: Update comment
         uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
         with:
