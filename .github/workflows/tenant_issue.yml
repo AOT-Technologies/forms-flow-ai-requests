@@ -39,8 +39,10 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             An error occurred while creating your tenant. <br />
+            ```
             Error code    : "${{ fromJson(steps.create-tenant.outputs.curl_response).code }}"
             Error Message : "${{ fromJson(steps.create-tenant.outputs.curl_response).message }}"
+            ```
 
       - name: Update success comment
         if: "${{ fromJson(steps.create-tenant.outputs.curl_response).code == '' }}"
