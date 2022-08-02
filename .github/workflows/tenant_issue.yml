@@ -33,7 +33,7 @@ jobs:
           echo "${{fromJson(steps.create-tenant.outputs.curl_response).code}}"
           
       - name: Update failure comment
-        if: ${{ fromJson(steps.create-tenant.outputs.curl_response).code }} != ''
+        if: "${{ fromJson(steps.create-tenant.outputs.curl_response).code != '' }}"
         uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -43,7 +43,7 @@ jobs:
             Error Message : "${{ fromJson(steps.create-tenant.outputs.curl_response).message }}"
 
       - name: Update success comment
-        if: ${{ fromJson(steps.create-tenant.outputs.curl_response).code }} == ''
+        if: "${{ fromJson(steps.create-tenant.outputs.curl_response).code == '' }}"
         uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
         with:
           issue-number: ${{ github.event.issue.number }}
