@@ -30,13 +30,7 @@ jobs:
         env:
           PAYLOAD: '{"key": "${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}", "name": "${{ fromJson(steps.issue-parser.outputs.jsonString).business_name }}", "details": {"applicationTitle": "${{ fromJson(steps.issue-parser.outputs.jsonString).application_name}}", "roles": [{"name":"clerk", "description": "Clerk"}, {"name":"approver", "description": "Approver"}], "createDefaultUsers": true } }'
         run: |
-          echo "${{ steps.issue-parser.outputs.jsonString }}"
-          echo "${{ fromJson(steps.keycloak.outputs.curl_response).access_token }}"
           echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -H 'Authorization: Bearer ${{ fromJson(steps.keycloak.outputs.curl_response).access_token }}' -d '${{env.PAYLOAD}}' )"
-      - name: Check result
-        run: |
-          echo "${{ steps.create-tenant.outputs.curl_response }}"
-          echo "${{fromJson(steps.create-tenant.outputs.curl_response).code}}"
           
       - name: Update failure comment
         if: "${{ fromJson(steps.create-tenant.outputs.curl_response).code != '' }}"
