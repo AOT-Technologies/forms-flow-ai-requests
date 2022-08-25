@@ -47,7 +47,7 @@ body:
   - type: textarea
     id: business_purpose
     attributes:
-      label: Description of your busines
+      label: Description of your business
       description: Please give a brief on your business
       placeholder: Tell us what you are trying to achive with formsflow!
     validations:
