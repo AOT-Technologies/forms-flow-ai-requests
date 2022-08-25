@@ -19,11 +19,31 @@ jobs:
       - name: Parse issue
         uses: stefanbuck/github-issue-parser@v2
         id: issue-parser
+      - name: Set environment variables
+        if: "${{ fromJson(steps.issue-parser.outputs.jsonString).environment == 'Openshift DEV' }}"
+        run: |
+          echo "ANLYTICS_URL=${{ secrets.ANALYTICS_URL }}" >> $GITHUB_ENV
+          echo "BPM_URL=${{ secrets.BPM_URL }}" >> $GITHUB_ENV
+          echo "KEYCLOAK_CLIENT=${{ secrets.KEYCLOAK_CLIENT }}" >> $GITHUB_ENV
+          echo "KEYCLOAK_CLIENT_SECRET=${{ secrets.KEYCLOAK_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "KEYCLOAK_TOKEN_ENDPOINT=${{ secrets.KEYCLOAK_TOKEN_ENDPOINT }}" >> $GITHUB_ENV
+          echo "TENANT_ENDPOINT=${{ secrets.TENANT_ENDPOINT }}" >> $GITHUB_ENV
+          echo "TENANT_URL=${{ secrets.TENANT_URL }}" >> $GITHUB_ENV
+      - name: Set environment variables
+        if: "${{ fromJson(steps.issue-parser.outputs.jsonString).environment == 'App1 DEV' }}"
+        run: |
+          echo "ANLYTICS_URL=${{ secrets.APP1_ANALYTICS_URL }}" >> $GITHUB_ENV
+          echo "BPM_URL=${{ secrets.APP1_BPM_URL }}" >> $GITHUB_ENV
+          echo "KEYCLOAK_CLIENT=${{ secrets.APP1_KEYCLOAK_CLIENT }}" >> $GITHUB_ENV
+          echo "KEYCLOAK_CLIENT_SECRET=${{ secrets.APP1_KEYCLOAK_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "KEYCLOAK_TOKEN_ENDPOINT=${{ secrets.APP1_KEYCLOAK_TOKEN_ENDPOINT }}" >> $GITHUB_ENV
+          echo "TENANT_ENDPOINT=${{ secrets.APP1_TENANT_ENDPOINT }}" >> $GITHUB_ENV
+          echo "TENANT_URL=${{ secrets.APP1_TENANT_URL }}" >> $GITHUB_ENV
         
       - name: Create Keycloak Token
         id: keycloak
         run: |
-          echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.KEYCLOAK_TOKEN_ENDPOINT }}' -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=client_credentials'  -d 'client_id=${{ secrets.KEYCLOAK_CLIENT }}' -d 'client_secret=${{ secrets.KEYCLOAK_CLIENT_SECRET }}' )"
+          echo "::set-output name=curl_response::$(curl -X POST '${{ env.KEYCLOAK_TOKEN_ENDPOINT }}' -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=client_credentials'  -d 'client_id=${{ env.KEYCLOAK_CLIENT }}' -d 'client_secret=${{ env.KEYCLOAK_CLIENT_SECRET }}' )"
 
       - name: Create tenant
         id: create-tenant
@@ -32,7 +52,7 @@ jobs:
         run: |
           echo "${{steps.keycloak.outputs.curl_response}}"
           echo "${{env.PAYLOAD}}"
-          echo "::set-output name=curl_response::$(curl -X POST '${{ secrets.TENANT_ENDPOINT }}' -H 'content-type:application/json' -H 'Authorization: Bearer ${{ fromJson(steps.keycloak.outputs.curl_response).access_token }}' -d '${{env.PAYLOAD}}' )"
+          echo "::set-output name=curl_response::$(curl -X POST '${{ env.TENANT_ENDPOINT }}' -H 'content-type:application/json' -H 'Authorization: Bearer ${{ fromJson(steps.keycloak.outputs.curl_response).access_token }}' -d '${{env.PAYLOAD}}' )"
           
       - name: Update failure comment
         if: "${{ fromJson(steps.create-tenant.outputs.curl_response).code != '' }}"
@@ -56,7 +76,7 @@ jobs:
             Please use below details to try out your tenant; <br/>
             
             
-            <b>Application URL : ${{ secrets.TENANT_URL }}${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }} </b>
+            <b>Application URL : ${{ env.TENANT_URL }}${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }} </b>
 
             | User role | User Name | Temporary Password |
             |--|--|--|
@@ -64,12 +84,12 @@ jobs:
             | Client user | ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}-client | formsflow |
             | Reviewer user | ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}-reviewer | formsflow |
 
-            <b>BPM Admin URL : ${{ secrets.BPM_URL }} </b>
+            <b>BPM Admin URL : ${{ env.BPM_URL }} </b>
             | User name | Temporary Password |
             |--|--|
             | ${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}-admin | formsflow |
 
-            <b>Analytics Dashboard URL : ${{ secrets.ANALYTICS_URL }}${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}  </b>
+            <b>Analytics Dashboard URL : ${{ env.ANALYTICS_URL }}${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }}  </b>
             | User name | Temporary Password |
             |--|--|
             | admin@${{ fromJson(steps.issue-parser.outputs.jsonString).tenant_key }} | formsflow |
