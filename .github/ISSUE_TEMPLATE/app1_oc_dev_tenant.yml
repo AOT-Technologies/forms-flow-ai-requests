@@ -1,4 +1,4 @@
-name: Request a Tenant in APP1, Openshift (DEV) environment
+name: Request a Tenant in DEV environment
 description: Create a tenant request
 title: "[DEV-TENANT]: "
 labels: ["dev-tenant"]
