@@ -8,9 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        <span style="color: red">
         Please note this ticket will create a tenant in **APP3** environment. Only continue if you need a tenant in APP3 environment, this environment is used for demo purpose and not for development integration testing.
-        </span>
 
   - type: input
     id: business_name
