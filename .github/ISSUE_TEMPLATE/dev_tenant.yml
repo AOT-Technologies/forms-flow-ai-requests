@@ -1,9 +1,9 @@
-name: Tenant Request
+name: Request a Tenant in DEV environment
 description: Create a tenant request
-title: "[Tenant]: "
-labels: ["tenant"]
-assignees:
-  - sumesh-aot
+title: ""
+labels: ["dev-tenant"]
+# assignees:
+#   - sumesh-aot
 body:
   - type: markdown
     attributes:
