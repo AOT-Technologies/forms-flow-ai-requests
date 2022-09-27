@@ -24,7 +24,7 @@ jobs:
       - name: Set environment variables
         if: "${{ fromJson(steps.issue-parser.outputs.jsonString).environment == 'Openshift DEV' }}"
         run: |
-          echo "${{ github.event.label.name }}"
+          echo "LABEL=${{ github.event.label.name }}"
           echo "ANALYTICS_URL=${{ secrets.ANALYTICS_URL }}" >> $GITHUB_ENV
           echo "BPM_URL=${{ secrets.BPM_URL }}" >> $GITHUB_ENV
           echo "KEYCLOAK_CLIENT=${{ secrets.KEYCLOAK_CLIENT }}" >> $GITHUB_ENV
