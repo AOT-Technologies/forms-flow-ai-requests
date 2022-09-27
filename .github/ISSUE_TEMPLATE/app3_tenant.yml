@@ -1,6 +1,6 @@
 name: Request a Tenant in APP3 environment
 description: Create a tenant request
-title: ""
+title: "[APP3-TENANT]: "
 labels: ["app3-tenant"]
 # assignees:
 #   - sumesh-aot
