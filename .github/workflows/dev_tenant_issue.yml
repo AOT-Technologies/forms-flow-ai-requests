@@ -2,7 +2,7 @@ name: Tenant Request
 
 on:
   issues:
-    types: [opened, edited]
+    types: [labeled]
 jobs:
   create-tenant:
     # if: ${{ github.event.label.name == 'dev-tenant' }}
@@ -36,6 +36,7 @@ jobs:
         if: "${{ fromJson(steps.issue-parser.outputs.jsonString).environment == 'App1 DEV' }}"
         run: |
           echo "LABEL=${{ github.event }}"
+          echo "LABEL=${{ github.event.label.name }}"
           echo "ISSUE_LABEL=${{ github.event.issue.labels }}"
           echo "TEST=${{ github.event.issue.number }}"
           echo "ANALYTICS_URL=${{ secrets.APP1_ANALYTICS_URL }}" >> $GITHUB_ENV
