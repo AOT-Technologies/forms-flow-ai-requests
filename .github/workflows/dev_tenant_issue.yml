@@ -36,7 +36,7 @@ jobs:
         if: "${{ fromJson(steps.issue-parser.outputs.jsonString).environment == 'App1 DEV' }}"
         run: |
           echo "LABEL=${{ github.event }}"
-          echo "ISSUE_LABEL=${{ github.event.issue.label }}"
+          echo "ISSUE_LABEL=${{ github.event.issue.labels }}"
           echo "TEST=${{ github.event.issue.number }}"
           echo "ANALYTICS_URL=${{ secrets.APP1_ANALYTICS_URL }}" >> $GITHUB_ENV
           echo "BPM_URL=${{ secrets.APP1_BPM_URL }}" >> $GITHUB_ENV
