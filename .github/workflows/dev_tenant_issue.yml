@@ -35,6 +35,7 @@ jobs:
       - name: Set environment variables
         if: "${{ fromJson(steps.issue-parser.outputs.jsonString).environment == 'App1 DEV' }}"
         run: |
+          echo "LABEL=${{ github.event.label.name }}"
           echo "ANALYTICS_URL=${{ secrets.APP1_ANALYTICS_URL }}" >> $GITHUB_ENV
           echo "BPM_URL=${{ secrets.APP1_BPM_URL }}" >> $GITHUB_ENV
           echo "KEYCLOAK_CLIENT=${{ secrets.APP1_KEYCLOAK_CLIENT }}" >> $GITHUB_ENV
