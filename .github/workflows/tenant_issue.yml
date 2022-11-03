@@ -42,16 +42,16 @@ jobs:
           echo "TENANT_ENDPOINT=${{ secrets.APP1_TENANT_ENDPOINT }}" >> $GITHUB_ENV
           echo "TENANT_URL=${{ secrets.APP1_TENANT_URL }}" >> $GITHUB_ENV
 
-      - name: Set environment variables
-        if: ${{ github.event.label.name == 'app3-tenant' }}
-        run: |
-          echo "ANALYTICS_URL=${{ secrets.APP3_ANALYTICS_URL }}" >> $GITHUB_ENV
-          echo "BPM_URL=${{ secrets.APP3_BPM_URL }}" >> $GITHUB_ENV
-          echo "KEYCLOAK_CLIENT=${{ secrets.APP3_KEYCLOAK_CLIENT }}" >> $GITHUB_ENV
-          echo "KEYCLOAK_CLIENT_SECRET=${{ secrets.APP3_KEYCLOAK_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "KEYCLOAK_TOKEN_ENDPOINT=${{ secrets.APP3_KEYCLOAK_TOKEN_ENDPOINT }}" >> $GITHUB_ENV
-          echo "TENANT_ENDPOINT=${{ secrets.APP3_TENANT_ENDPOINT }}" >> $GITHUB_ENV
-          echo "TENANT_URL=${{ secrets.APP3_TENANT_URL }}" >> $GITHUB_ENV
+#       - name: Set environment variables
+#         if: ${{ github.event.label.name == 'app3-tenant' }}
+#         run: |
+#           echo "ANALYTICS_URL=${{ secrets.APP3_ANALYTICS_URL }}" >> $GITHUB_ENV
+#           echo "BPM_URL=${{ secrets.APP3_BPM_URL }}" >> $GITHUB_ENV
+#           echo "KEYCLOAK_CLIENT=${{ secrets.APP3_KEYCLOAK_CLIENT }}" >> $GITHUB_ENV
+#           echo "KEYCLOAK_CLIENT_SECRET=${{ secrets.APP3_KEYCLOAK_CLIENT_SECRET }}" >> $GITHUB_ENV
+#           echo "KEYCLOAK_TOKEN_ENDPOINT=${{ secrets.APP3_KEYCLOAK_TOKEN_ENDPOINT }}" >> $GITHUB_ENV
+#           echo "TENANT_ENDPOINT=${{ secrets.APP3_TENANT_ENDPOINT }}" >> $GITHUB_ENV
+#           echo "TENANT_URL=${{ secrets.APP3_TENANT_URL }}" >> $GITHUB_ENV
       - name: Create Keycloak Token
         id: keycloak
         run: |
